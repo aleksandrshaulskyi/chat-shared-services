@@ -1,0 +1,51 @@
+{
+    "vhosts": [
+        {"name": "chat"}
+    ],
+    "users": [
+        {
+            "name": "default_admin",
+            "password_hash": "IjrMYozKWQuJIPOAElgDkjzcCYE0wv12/ZaI4wXLzTfjb3xV",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": "administrator"
+        }
+    ],
+    "permissions": [
+        {
+            "user": "default_admin",
+            "vhost": "chat",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        }
+  ],
+    "exchanges": [
+        {"name": "websockets", "vhost": "chat", "type": "direct", "durable": true},
+        {"name": "database", "vhost": "chat", "type": "direct", "durable": true}
+    ],
+    "queues": [
+        {"name": "database.primary", "vhost": "chat", "durable": true, "auto_delete": false}
+    ],
+    "bindings": [
+        {
+            "vhost": "chat",
+            "source": "database",
+            "destination": "database.primary",
+            "destination_type": "queue",
+            "routing_key": ""
+        }
+    ],
+    "policies": [
+        {
+            "vhost": "chat",
+            "name": "websocket-ephemeral-queues",
+            "pattern": "^websocket\\.connection.",
+            "apply-to": "queues",
+            "definition": {
+                "expires": 600000,
+                "message-ttl": 600000,
+                "queue-mode": "lazy"
+            }
+        }
+    ]
+}

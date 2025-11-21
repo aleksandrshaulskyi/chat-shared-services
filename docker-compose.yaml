@@ -1,0 +1,41 @@
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.13-management
+    expose:
+      - 5672
+    ports:
+      - '15672:15672'
+    volumes:
+      - ./definitions.json:/etc/rabbitmq/definitions.json:ro
+      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+    env_file: .env
+    restart: unless-stopped
+    networks:
+      - chat-network
+  redis:
+    container_name: redis
+    image: redis:7.2
+    expose:
+      - 6379
+    command: 'redis-server --save --appendonly no'
+    restart: unless-stopped
+    networks:
+      - chat-network
+  nginx:
+    container_name: nginx
+    image: nginx:1.27-alpine
+    ports:
+      - '80:80'
+    env_file: .env
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ../chat-auth/chat-auth/backend/media:/srv/media
+    restart: unless-stopped
+    networks:
+      - chat-network
+
+networks:
+  chat-network:
+    driver: bridge
+    external: true
