@@ -4,7 +4,7 @@ Shared infrastructure layer for the distributed chat platform
 
 A collection of essential infrastructure services used across the entire distributed chat system — message broker, caching layer, reverse proxy, and shared configurations packaged into a single, easy-to-run environment.
 
-№№ 🚀 Overview
+## 🚀 Overview
 
 Chat-shared-services provides the common infrastructure foundation required by every backend microservice in the platform.
 Instead of duplicating configs across repositories, this project centralizes the critical shared components:
