@@ -1,24 +1,55 @@
 # Chat-shared-services.
 
-The shared services for the distributed chat system.
+Shared infrastructure layer for the distributed chat platform
 
-## Brief.
+A collection of essential infrastructure services used across the entire distributed chat system — message broker, caching layer, reverse proxy, and shared configurations packaged into a single, easy-to-run environment.
 
-These are the services that are intended to be shared between all of the microservices in the chat system.
+№№ 🚀 Overview
 
-## Stage.
+Chat-shared-services provides the common infrastructure foundation required by every backend microservice in the platform.
+Instead of duplicating configs across repositories, this project centralizes the critical shared components:
 
-These services are in the stage of active development. Updates are released multiple times a week.
+**RabbitMQ** — message broker for events and real-time communication
 
-## Features.
+**Redis** — caching, ephemeral state, presence tracking
 
-Provide all the shared services for the system.
+**Nginx** — reverse proxy, routing, and static entrypoint for local development
 
-1) RabbitMQ and it's configuartion.
-2) Redis.
-3) Nginx and it's configuration.
+These services form the backbone of the system, enabling reliable communication between Chat-auth, Chat-transport, Chat-messaging, and other components.
 
-## Usage.
+The repository is optimized for local development, making it effortless to spin up the entire stack with a single command.
+
+## 🧩 Features
+
+- RabbitMQ with full configuration
+
+Exchanges, queues, bindings
+
+Management UI enabled
+
+Ready for real-time messaging workloads
+
+- Redis
+
+Used for caching, deduplication, presence, and ephemeral data
+
+Minimal configuration for maximum speed
+
+- Nginx reverse proxy
+
+Central entrypoint for routing HTTP/WebSocket traffic
+
+Clean proxying setup for development
+
+Ideal for working with multiple services behind a single hostname
+
+Unified infrastructure environment
+All shared dependencies defined in one docker-compose file.
+
+Consistent development experience
+Each microservice relies on the same standardized RabbitMQ, Redis, and Nginx configs.
+
+## ⚙️ Usage.
 
 1) Clone the repository.
 2) Create .env file in the backed directory using the env_example.txt as an example.
@@ -28,6 +59,7 @@ Provide all the shared services for the system.
 
 None yet released.
 
-## Back to Index repository of the whole chat system.
+## 🔗 Back to the Main Index Repository
 
+Explore the full distributed chat system:
 https://github.com/aleksandrshaulskyi/chat-index
